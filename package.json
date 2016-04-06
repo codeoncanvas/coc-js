@@ -1,7 +1,7 @@
 {
   "name": "coc-js",
   "version": "1.0.0",
-  "description": "COC JS classes",
+  "description": "COC JS utlities",
   "main": "index.js",
   "directories": {
     "example": "examples"
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/codeoncanvas/coc-js.git"
   },
-  "author": "",
+  "author": "Ramkumar Shankar <ram@codeoncanvas.cc>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/codeoncanvas/coc-js/issues"
