@@ -1,9 +1,11 @@
+var cocSwipe = require('../../src/coc-swipe');
+
 var currentTouches = [];
 
 window.onload = function() {
   var touchCanvas = document.getElementById("canvas");
-  touchCanvas.width = window.innerWidth/2;
-  touchCanvas.height = window.innerHeight/2;
+  touchCanvas.width = window.innerWidth;
+  touchCanvas.height = window.innerHeight;
 
   touchCanvas.addEventListener("touchstart", handleTouchStart, false);
   touchCanvas.addEventListener("touchend", handleTouchEnd, false);
@@ -30,7 +32,6 @@ function handleTouchMove(evt) {
     var idx = ongoingTouchIndexById(evt.changedTouches[i].identifier);
     if (idx >= 0) {
       cocSwipe.pointMoved(evt.changedTouches[idx].pageX, evt.changedTouches[idx].pageY);
-      // console.log(evt.changedTouches[idx]);
     }
     else {
       //Only handle single touches now
@@ -44,7 +45,6 @@ function handleTouchEnd(evt) {
   for (var i = 0; i < evt.changedTouches.length; i++) {
     var idx = ongoingTouchIndexById(evt.changedTouches[i].identifier);
     if (idx >= 0) {
-      // console.log(evt.changedTouches[idx]);
       cocSwipe.pointUp(evt.changedTouches[idx].pageX, evt.changedTouches[idx].pageY);
       currentTouches.splice(idx, 1);
     }
@@ -59,9 +59,33 @@ function runLoop() {
   //Code here
   cocSwipe.update();
 
+  var bFoundSwipeGesture = cocSwipe.hasFoundSwipeGesture();
+
+  if(bFoundSwipeGesture) {
+    var swipeDirection = cocSwipe.getSwipeGestureDirection();
+
+    switch (swipeDirection) {
+      case cocSwipe.SwipeDirectionEnum.UP:
+        console.log("UP");
+        break;
+      case cocSwipe.SwipeDirectionEnum.RIGHT:
+        console.log("RIGHT");
+        break;
+      case cocSwipe.SwipeDirectionEnum.DOWN:
+        console.log("DOWN");
+        break;
+      case cocSwipe.SwipeDirectionEnum.LEFT:
+        console.log("LEFT");
+        break;
+      default:
+        break;
+    }
+  }
+
   var canvas = document.getElementById('canvas');
   var context = canvas.getContext('2d');
   var radius = 5;
+  context.clearRect(0,0,canvas.width, canvas.height);
   for (var i = 0; i < cocSwipe.points.length; i++) {
     // console.log(cocSwipe.points[i].position);
     context.fillStyle = 'green';
