@@ -1,3 +1,14 @@
+/***************
+coc-swipe.js
+Ramkumar Shankar
+Port of the C++ cocSwipe class for swipe dete tion
+Created 06/04/2016
+***************/
+
+//Specify dependency on vec2 class here
+var vec2 = require('../lib/vec2');
+
+//cocSwipe 'class' starts here
 var cocSwipe = cocSwipe || {};
 
 cocSwipe.SwipeDirectionEnum = {
@@ -74,6 +85,10 @@ cocSwipe.reset = function() {
 
   this.gestureDirection = this.SwipeDirectionEnum.UNDEFINED;
   this.gestureStartIndex = -1;
+};
+
+cocSwipe.hasFoundSwipeGesture = function() {
+  return this.bGestureFoundNew;
 };
 
 cocSwipe.getSwipeGestureDirection = function() {
@@ -233,18 +248,13 @@ cocSwipe.update = function() {
   var gesturePointStart;
   var gestureDirectionStart;
 
-  // console.log(this.gestureStartIndex);
-
   for (var i = this.gestureStartIndex; i < this.points.length; i++) {
     if (i == this.gestureStartIndex) {
       gesturePointStart = Object.assign({}, this.points[i]);
       gestureDirectionStart = this.getDirectionFromAngle(gesturePointStart.angleDeg);
     }
 
-    // console.log(this.points[i].velocityScale);
-
     var gesturePoint = Object.assign({}, this.points[i]);
-    // console.log(gesturePoint.velocity);
     if(gesturePoint.velocityScale < 1.0) {
       this.gestureDirection = this.SwipeDirectionEnum.UNDEFINED;
       this.gestureStartIndex = -1;
@@ -254,7 +264,7 @@ cocSwipe.update = function() {
     var gestureDirectionNew = this.getDirectionFromAngle(gesturePoint.angleDeg);
     if (gestureDirectionNew != gestureDirectionStart) {
       this.gestureDirection = this.SwipeDirectionEnum.UNDEFINED;
-      gestureStartIndex = -1;
+      this.gestureStartIndex = -1;
       break;
     }
 
@@ -262,7 +272,6 @@ cocSwipe.update = function() {
     if (dist >= this.swipePixelDistanceThreshold) {
       if (this.gestureDirection != gestureDirectionNew) {
         this.bGestureFoundNew = true;
-        console.log(gestureDirectionNew);
       }
       this.gestureDirection = gestureDirectionNew;
     }
@@ -296,3 +305,6 @@ cocSwipe.getDirectionFromAngle = function(angleDeg) {
   }
   return dir;
 };
+
+//Allow 'requiring' as a commonJS module
+module.exports = cocSwipe;
