@@ -1,7 +1,8 @@
 /***************
 coc-swipe.js
+v 1.0
 Ramkumar Shankar
-Port of the C++ cocSwipe class for swipe dete tion
+Port of the C++ cocSwipe class for swipe detection
 Created 06/04/2016
 ***************/
 
