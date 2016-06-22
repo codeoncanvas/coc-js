@@ -14,7 +14,7 @@
     "url": "git+https://github.com/codeoncanvas/coc-js.git"
   },
   "author": "Ramkumar Shankar <ram@codeoncanvas.cc>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/codeoncanvas/coc-js/issues"
   },
